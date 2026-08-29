@@ -1,0 +1,20 @@
+ public class ClassCode{
+    //class level variable. And what variables we are goint to use
+    private int num;
+    private int CONSTANT;
+
+    // parameter list
+    public Classcode(int num){
+        this.num = num;
+    }
+
+    // idea of a functions 
+    public void SetNum(int num){ 
+        this.num = num;
+    }
+
+    public int getNum(){
+        return this.num;
+    }
+
+ }
