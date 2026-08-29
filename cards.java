@@ -23,6 +23,26 @@ public class cards {
         int[] positions = new int[15];
         fillPositions(positions);
 
+        int[] smallArray = new int[1000];
+
+        long startTime = System.nanoTime();
+        fillPositions(smallArray);
+        long endTime = System.nanoTime();
+
+        System.out.println("Small array time: "
+                + (endTime - startTime) + " nanoseconds");
+
+
+        int[] largeArray = new int[1000000];
+
+        long startTime2 = System.nanoTime();
+        fillPositions(largeArray);
+        long endTime2 = System.nanoTime();
+
+        System.out.println("Large array time: "
+                + (endTime2 - startTime2) + " nanoseconds");
+
+
         Scanner Response = new Scanner(System.in);
         System.out.println("Reveal each card in your deck. There are 12 cards");
         System.out.println("to end the game type 14");
