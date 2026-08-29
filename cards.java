@@ -1,11 +1,27 @@
 import java.util.Scanner;
+
 public class cards {
+    private String name;
+
+    public cards(String name) {
+        this.name = name;
+    }
+
+    public static void fillPositions(int[] positions) {
+        for (int i = 0; i < positions.length; i++) {
+            positions[i] = i;
+        }
+    }
+
+    public static boolean validChoice(int choice, int[] positions) {
+        return choice > 0 && choice < 11;
+    }
+
+
     public static void main(String[] args) {
         System.out.print("Please choose a position Within the Array.");
         int[] positions = new int[15];
-        //This sets each position in the array with a number
-        for(int i = 0; i < positions.length; positions[i] = i++) {
-        }
+        fillPositions(positions);
 
         Scanner Response = new Scanner(System.in);
         System.out.println("Reveal each card in your deck. There are 12 cards");
@@ -16,8 +32,8 @@ public class cards {
         while(condition) {
             System.out.println("pick a number 0 to 13: ");
             int choice = Response.nextInt();
-            if (0 < choice && choice < 11) {
-                System.out.println("Your card number is " + positions[choice]);
+            if(validChoice(choice, positions)) {
+                System.out.println("Your card number is "  + positions[choice]);
             } else if (choice == 0) {
                 System.out.println("Your card is the Ace which is card number is " + positions[choice]);
             } else if (choice == 11) {
@@ -35,6 +51,6 @@ public class cards {
 
         System.out.println("Thanks for playing!!");
     }
-}
 
+}
 
