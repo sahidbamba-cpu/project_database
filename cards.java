@@ -68,7 +68,7 @@ public class cards {
                 System.out.println("This number is to big, Please choose another Number!");
             }
         }
-
+        //The End
         System.out.println("Thanks for playing!!");
     }
 
