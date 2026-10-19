@@ -99,14 +99,14 @@ public class BinarySearchTree<E extends Comparable<E>> implements BinarySearchTr
     @Override
     public String preOrderTraversal() {
         // TODO: return the values using a preorder traversal
-        preOrderTraversalRecursive(root)
+        preOrderTraversalRecursive(root);
     }
 
     private String preOrderTraversalRecursive(Node<E> current) {
         if(current == null) {
-            return " ";
+            return "";
         }else{
-            return  " " + current.data + preOrderTraversal(current.left) + preOrderTraversalRecursive(current.right);
+            return  " " + current.data + postOrderTraversalRecursive(current.left) + preOrderTraversalRecursive(current.right);
             }
         }
     }
@@ -114,15 +114,32 @@ public class BinarySearchTree<E extends Comparable<E>> implements BinarySearchTr
     @Override
     public String postOrderTraversal() {
         // TODO: return the values using a postorder traversal
-        throw new UnsupportedOperationException("TODO: postOrderTraversal is not implemented yet");
+        postOrderTraversalRecursive(root);
     }
+
+    private String postOrderTraversalRecursive(Node<E> current) {
+        if(current == null) {
+            return "";
+        }else{
+            return  " " + postOrderTraversalRecursive(current.left) + postOrderTraversalRecursive(current.right) + current.data;
+        }
+    }
+
 
     // ---- Measuring ----
 
     @Override
     public int size() {
         // TODO: count the nodes
-        throw new UnsupportedOperationException("TODO: size is not implemented yet");
+        return sizeRecursive(root);
+    }
+
+    private int sizeRecursive(Node<E> current) {
+        if (current == null) {
+            return 0;
+        } else {
+            return 1 + sizeRecursive(current.left) + sizeRecursive(current.right);
+        }
     }
 
     @Override
