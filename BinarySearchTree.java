@@ -181,14 +181,38 @@ public class BinarySearchTree<E extends Comparable<E>> implements BinarySearchTr
     @Override
     public boolean isFull() {
         // TODO: true if every node has exactly 0 or 2 children
-        throw new UnsupportedOperationException("TODO: isFull is not implemented yet");
+        return isFullRecursive(root);
+    }
+
+    private boolean isFullRecursive(Node<E> current) {
+        if(current == null) {
+            return true;
+        }
+        if (current.left == null && current.right == null) {
+            return true;
+        }
+
+        if (current.left != null && current.right == null) {
+            return false;
+        }
+
+        if (current.left == null && current.right != null) {
+            return false;
+        }
+
+        return isFullRecursive(current.left)
+                && isFullRecursive(current.right);
     }
 
     @Override
     public boolean isPerfect() {
         // TODO: true if every internal node has 2 children AND all leaves are on the same level
         // Hint: a perfect tree of height h has exactly 2^(h+1) - 1 nodes. Consider your other methods.
-        throw new UnsupportedOperationException("TODO: isPerfect is not implemented yet");
+        return isPerfectRecursive(root);
+    }
+
+    private booleanisPerfectRecursive(Node<E> current){
+    
     }
 
     // ---- Searching ----
