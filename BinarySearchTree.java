@@ -145,14 +145,35 @@ public class BinarySearchTree<E extends Comparable<E>> implements BinarySearchTr
     @Override
     public int countLeaves() {
         // TODO: count the nodes that have no children
-        throw new UnsupportedOperationException("TODO: countLeaves is not implemented yet");
+        return countLeavesRecursive(root);
     }
+
+    private int countLeavesRecursive(Node<E> current) {
+        if (current == null) {
+            return 0;
+        }
+
+        if (current.left == null && current.right == null) {
+            return 1;
+        }
+        return countLeavesRecursive(current.left)
+                + countLeavesRecursive(current.right);
+    }
+
 
     @Override
     public int height() {
         // TODO: return the number of branches on the longest path from the root to a leaf
         // Remember: a lone root has height 0 and an empty tree has height -1
-        throw new UnsupportedOperationException("TODO: height is not implemented yet");
+      return heightRecursive(root);
+    }
+
+    private int heightRecursive(Node<E> current) {
+        if (current == null) {
+            return -1;
+        } else {
+            return 1 + Math.max(heightRecursive(current.left), heightRecursive(current.right));
+        }
     }
 
     // ---- Classifying ----
