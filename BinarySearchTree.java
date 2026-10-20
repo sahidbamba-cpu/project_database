@@ -208,12 +208,10 @@ public class BinarySearchTree<E extends Comparable<E>> implements BinarySearchTr
     public boolean isPerfect() {
         // TODO: true if every internal node has 2 children AND all leaves are on the same level
         // Hint: a perfect tree of height h has exactly 2^(h+1) - 1 nodes. Consider your other methods.
-        return isPerfectRecursive(root);
+        return size() == Math.pow(2, height() + 1) - 1;
     }
 
-    private booleanisPerfectRecursive(Node<E> current){
-    
-    }
+
 
     // ---- Searching ----
 
