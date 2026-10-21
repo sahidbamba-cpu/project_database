@@ -3,6 +3,7 @@ package org.csu.cpsc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.NoSuchElementException;
 
 public class BinarySearchTree<E extends Comparable<E>> implements BinarySearchTreeInterface<E> {
     private Node<E> root;
@@ -99,7 +100,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements BinarySearchTr
     @Override
     public String preOrderTraversal() {
         // TODO: return the values using a preorder traversal
-        preOrderTraversalRecursive(root);
+        return preOrderTraversalRecursive(root);
     }
 
     private String preOrderTraversalRecursive(Node<E> current) {
@@ -107,14 +108,13 @@ public class BinarySearchTree<E extends Comparable<E>> implements BinarySearchTr
             return "";
         }else{
             return  " " + current.data + postOrderTraversalRecursive(current.left) + preOrderTraversalRecursive(current.right);
-            }
         }
     }
 
     @Override
     public String postOrderTraversal() {
         // TODO: return the values using a postorder traversal
-        postOrderTraversalRecursive(root);
+        return postOrderTraversalRecursive(root);
     }
 
     private String postOrderTraversalRecursive(Node<E> current) {
@@ -165,7 +165,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements BinarySearchTr
     public int height() {
         // TODO: return the number of branches on the longest path from the root to a leaf
         // Remember: a lone root has height 0 and an empty tree has height -1
-      return heightRecursive(root);
+        return heightRecursive(root);
     }
 
     private int heightRecursive(Node<E> current) {
@@ -219,22 +219,64 @@ public class BinarySearchTree<E extends Comparable<E>> implements BinarySearchTr
     public boolean contains(E data) {
         // TODO: true if the tree has the value, false if it does not
         // Hint: look at how add decides whether to go left or right. You do not need to look at every node.
-        throw new UnsupportedOperationException("TODO: contains is not implemented yet");
+        return containsRecursive(root, data);
+    }
+    private boolean containsRecursive(Node<E> current, E data) {
+        if (current == null) {
+            return false;
+        }
+
+        int comparison = data.compareTo(current.data);
+
+        if (comparison == 0) {
+            return true;
+        }
+
+        if (comparison < 0) {
+            return containsRecursive(current.left, data);
+        }
+
+        return containsRecursive(current.right, data);
     }
 
     @Override
     public E findMin() {
-        // TODO: return the smallest value. Throw a NoSuchElementException (java.util) if the tree is empty
-        // Hint: consider the properties of how a node is added. you do not need to look at every node.
-        throw new UnsupportedOperationException("TODO: findMin is not implemented yet");
+        if (root == null) {
+            throw new NoSuchElementException();
+        }
+
+        return findMinRecursive(root);
     }
+
+    private E findMinRecursive(Node<E> current){
+        if (current.left == null) {
+            return current.data;
+        }
+
+        return findMinRecursive(current.left);
+    }
+
 
     @Override
     public E findMax() {
         // TODO: return the largest value. Throw a NoSuchElementException (java.util) if the tree is empty
         // Hint: you do not need to look at every node.
-        throw new UnsupportedOperationException("TODO: findMax is not implemented yet");
+        if (root == null) {
+            throw new NoSuchElementException();
+        }
+
+        return findMaxRecursive(root);
     }
+
+    private E findMaxRecursive(Node<E> current){
+        if (current.right == null) {
+            return current.data;
+        }
+
+        return findMaxRecursive(current.right);
+    }
+
+
 
     // ---- BONUS (10 points) ----
 
@@ -256,10 +298,13 @@ public class BinarySearchTree<E extends Comparable<E>> implements BinarySearchTr
             this.right = null;
         }
 
-        /** Compares two nodes by looking only at their data. */
+        /**
+         * Compares two nodes by looking only at their data.
+         */
         @Override
         public int compareTo(Node<E> other) {
             return this.data.compareTo(other.data);
         }
     }
+
 }
