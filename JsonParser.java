@@ -221,8 +221,37 @@ public class JsonParser {
 
     // TODO (README 4.4): parseArray
     protected List<Object> parseArray() {
-        throw new UnsupportedOperationException("parseArray is not implemented yet");
+        List<Object> values = new ArrayList<>();
+
+        expect('[');
+        skipWhitespace();
+
+        if (peek() == ']') {
+            expect(']');
+            return values;
+        }
+
+        boolean parsing = true;
+
+        while (parsing) {
+            values.add(parseValue());
+            skipWhitespace();
+
+            if (peek() == ',') {
+                expect(',');
+                skipWhitespace();
+            } else if (peek() == ']') {
+                expect(']');
+                parsing = false;
+            } else {
+                throw error("Expected ',' or ']'");
+            }
+        }
+
+        return values;
     }
+
+
 
     // TODO (README 4.5): parseObject
     protected Map<String, Object> parseObject() {
