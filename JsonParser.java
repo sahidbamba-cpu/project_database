@@ -255,6 +255,50 @@ public class JsonParser {
 
     // TODO (README 4.5): parseObject
     protected Map<String, Object> parseObject() {
-        throw new UnsupportedOperationException("parseObject is not implemented yet");
+        Map<String, Object> object = new HashMap<>();
+        Set<String> keys = new HashSet<>();
+
+        expect('{');
+        skipWhitespace();
+
+        if (peek() == '}') {
+            expect('}');
+            return object;
+        }
+
+        boolean parsing = true;
+
+        while (parsing) {
+            skipWhitespace();
+
+            int keyPosition = pos;
+            String key = parseString();
+
+            if (keys.contains(key)) {
+                throw new JsonParseException("Duplicate key: " + key, keyPosition);
+            }
+
+            keys.add(key);
+
+            skipWhitespace();
+            expect(':');
+            skipWhitespace();
+
+            object.put(key, parseValue());
+
+            skipWhitespace();
+
+            if (peek() == ',') {
+                expect(',');
+                skipWhitespace();
+            } else if (peek() == '}') {
+                expect('}');
+                parsing = false;
+            } else {
+                throw error("Expected ',' or '}'");
+            }
+        }
+
+        return object;
     }
 }
